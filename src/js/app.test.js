@@ -1,4 +1,7 @@
 import demo from "./app";
+/**
+ * @jest-environment jsdom
+ */
 
 describe("Пример теста", () => {
   test.each([

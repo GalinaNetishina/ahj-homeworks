@@ -1,11 +1,6 @@
-// TODO: write code here
+import Game from './game/game.js'
 
-// comment this to pass build
-const unusedVariable = "variable";
-
-// for demonstration purpose only
-export default function demo(value) {
-  return `Demo: ${value}`;
-}
-
-console.log("app.js included");
+document.addEventListener('DOMContentLoaded', () => {
+  const widget = new Game(document.querySelector('.board'));
+  window.widget = widget;
+})

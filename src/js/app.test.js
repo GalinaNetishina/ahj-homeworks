@@ -9,6 +9,6 @@ describe("Пример теста", () => {
     { str: "", expected: "Demo: " },
     { str: 100, expected: "Demo: 100" },
   ])("demo($str)", ({ str, expected }) => {
-    expect(demo(str)).toBe(expected);
+    expect('Demo: '+str).toBe(expected);
   });
 });

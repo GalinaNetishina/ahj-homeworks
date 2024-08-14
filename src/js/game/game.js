@@ -6,7 +6,8 @@ export default class Game {
         this.kills = 0;
         this.miss = 0;
         this.size = size;
-        this.timer = 60;
+        const timerPlace = document.querySelector('.timer');
+        this.timer = new Timer(timerPlace);
 
         this.mole = document.createElement('div');
         this.mole.classList.add('mole');
@@ -42,7 +43,6 @@ export default class Game {
      setInterval(() => {
             let activeHole = Math.floor( 1 + Math.random() * this.size**2 );
             this.#getHole( activeHole ).append(this.mole);
-            this.timer--;
           }, 1000 );
       };
 
@@ -58,16 +58,16 @@ export default class Game {
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close';
         closeBtn.innerText = 'Закрыть'
-        closeBtn.addEventListener('click', ()=>{document.body.removeChild(message)})
+        closeBtn.addEventListener('click', ()=>{
+            document.body.removeChild(message);
+            this.timer.reset();
+            this.#play()})
         message.append(closeBtn);
         document.body.append(message);
     }
 
     #play() {
         this.#moleRun();
-        const timerPlace = document.querySelector('.timer');
-        const timer = new Timer(timerPlace);
-        timerPlace.append(timer);
-        timer.tick(()=>this.#showResult());
+        this.timer.tick(()=>this.#showResult());
     }
 }

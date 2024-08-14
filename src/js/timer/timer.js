@@ -1,14 +1,15 @@
 export default class Timer {
     constructor(element, time = 1) {
         this._element = element;
+        this.time = time * 30;
         const progress = document.createElement('progress');
         progress.classList.add('timer-progress');
         progress.id = 'progress';
         const label = document.createElement('label');
         label.innerText = 'Time remains...';
         label.for='progress';
-        progress.max = time * 60;
-        progress.value = time * 60;
+        progress.max = this.time;
+        progress.value = this.time;
         this.timer = progress;
         element.append(label);
         element.append(this.timer);
@@ -23,4 +24,9 @@ export default class Timer {
             }
         }, 1000);
     }   
+
+    reset() {
+        this._element.value = this.time;
+
+    }
 }

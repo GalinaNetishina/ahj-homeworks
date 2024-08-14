@@ -1,3 +1,5 @@
+import Timer from "../timer/timer";
+
 export default class Game {
     constructor(element, size = 4) {
         this._element = element;
@@ -60,10 +62,12 @@ export default class Game {
         message.append(closeBtn);
         document.body.append(message);
     }
+
     #play() {
         this.#moleRun();
-        setTimeout(() => {
-            this.#showResult()
-        }, 6000)
+        const timerPlace = document.querySelector('.timer');
+        const timer = new Timer(timerPlace);
+        timerPlace.append(timer);
+        timer.tick(()=>this.#showResult());
     }
 }

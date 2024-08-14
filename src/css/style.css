@@ -58,3 +58,13 @@
     background-color: red;
     border-radius: 5px;
 }
+
+.timer {
+    width: 100%;
+    display: flex;
+}
+
+.timer-progress {
+    width: 80%;
+    
+}

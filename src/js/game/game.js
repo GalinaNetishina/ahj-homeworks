@@ -6,12 +6,8 @@ export default class Game {
         this.kills = 0;
         this.miss = 0;
         this.size = size;
-        const timerPlace = document.querySelector('.timer');
-        this.timer = new Timer(timerPlace);
 
-        this.mole = document.createElement('div');
-        this.mole.classList.add('mole');
-
+        this.#drawUI()
         this.#drawBoard(size);
         this.activeHole = Math.floor( 1 + Math.random() * this.size**2 )
         this.#play();
@@ -20,9 +16,37 @@ export default class Game {
     hit(element) {
         if (element.querySelector('.mole')){
             this.kills++;
+            this.#moleJump();
         } else {
             this.miss++;
         }
+    }
+
+    #drawUI() {
+        const timerPlace = document.querySelector('.timer');
+        this.timer = new Timer(timerPlace);
+
+        const message = document.createElement('div');
+        message.className = 'report hidden';
+        const kills= document.createElement('span');
+        kills.id = 'kills';
+        const miss= document.createElement('span');
+        miss.id = 'miss';
+        message.innerHTML = `<h1>Игра окончена!</h1>
+        <p>Ваш результат:<br>
+        </p>`
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'close';
+        closeBtn.innerText = 'Закрыть'
+        closeBtn.addEventListener('click', ()=>{
+            this.message.classList.add('hidden');
+            this.reset();            
+            this.#play()})
+        message.append(kills);
+        message.append(miss);
+        message.append(closeBtn);
+        document.body.append(message);
+        this.message = message;
     }
 
     #drawBoard(size) {
@@ -33,41 +57,39 @@ export default class Game {
             hole.addEventListener('click', () => this.hit(hole))
             this._element.append(hole);
         }
+        this.mole = document.createElement('div');
+        this.mole.classList.add('mole');
     }
 
     #getHole(index){
        return document.getElementById(`hole${index}`);
     } 
     
-    #moleRun() {
-     setInterval(() => {
-            let activeHole = Math.floor( 1 + Math.random() * this.size**2 );
-            this.#getHole( activeHole ).append(this.mole);
-          }, 1000 );
+    #moleJump() {
+        this.#getHole( this.activeHole ).append(this.mole);
+        let nextHole = Math.floor( 1 + Math.random() * this.size**2 );
+        if (nextHole == this.activeHole) {
+                this.#moleJump();
+            }
+        this.activeHole = nextHole;
       };
 
     #showResult() {
-        const message = document.createElement('div');
-        message.className = 'report';
-        message.innerHTML = `<h1>Игра окончена!</h1>
-        <p>Ваш результат:<br>
+        document.querySelector('#kills').innerHTML = `Попаданий - ${this.kills}<br>`;
+        document.querySelector('#miss').innerHTML =`Промахов - ${this.miss}<br>`;
+        this.message.classList.remove('hidden');
+    }
 
-        Попаданий - ${this.kills}<br>
-        Промахов - ${this.miss}
-        </p>`
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'close';
-        closeBtn.innerText = 'Закрыть'
-        closeBtn.addEventListener('click', ()=>{
-            document.body.removeChild(message);
-            this.timer.reset();
-            this.#play()})
-        message.append(closeBtn);
-        document.body.append(message);
+    reset() {
+        this.timer.reset();
+        this.kills = 0;
+        this.miss = 0;
     }
 
     #play() {
-        this.#moleRun();
+        setInterval(()=>{
+            this.#moleJump()
+        }, 1000)
         this.timer.tick(()=>this.#showResult());
     }
 }

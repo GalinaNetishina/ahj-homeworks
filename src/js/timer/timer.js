@@ -1,3 +1,5 @@
+import './timer.css'
+
 export default class Timer {
     constructor(element, time = 1) {
         this._element = element;

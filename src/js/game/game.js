@@ -1,4 +1,5 @@
 import Timer from "../timer/timer";
+import './game.css'
 
 export default class Game {
     constructor(element, size = 4) {

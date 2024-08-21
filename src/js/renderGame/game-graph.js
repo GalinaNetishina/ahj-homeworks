@@ -1,4 +1,4 @@
-import "./game-graph.css";
+import  "./game-graph.css";
 
 export default function renderGame(element) {
   if (typeof element === "string") {

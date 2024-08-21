@@ -1,5 +1,5 @@
 
-# Whack-a-golin game[![Build status](https://ci.appveyor.com/api/projects/status/ry1er4yt6a0cx48t?svg=true)](https://ci.appveyor.com/project/GalinaNetishina/ahj-homeworks)
+# Whack-a-goblin game[![Build status](https://ci.appveyor.com/api/projects/status/ry1er4yt6a0cx48t?svg=true)](https://ci.appveyor.com/project/GalinaNetishina/ahj-homeworks)
 
   
 
